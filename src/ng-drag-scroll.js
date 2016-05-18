@@ -71,6 +71,16 @@
                     lastClientX = startClientX = e.clientX;
                     lastClientY = startClientY = e.clientY;
 
+                    var isWk = navigator.userAgent.match(/WebKit/);
+                    var isFF = navigator.userAgent.match(/Gecko/);
+                    var cursor = 'move';
+                    if (isWk) {
+                        cursor = '-webkit-grab';
+                    }else if(isFF){
+                        cursor = '-moz-grab';
+                    }
+                    angular.element(e.target).css('cursor',cursor);
+
                     clearSelection();
 
                     e.preventDefault();
@@ -113,6 +123,16 @@
                         }
                         if(!axis || axis === 'y') {
                             $element[0].scrollTop -= (-lastClientY + (lastClientY = e.clientY));
+                        }
+                        
+                        var isWk = navigator.userAgent.match(/WebKit/);
+                        var isFF = navigator.userAgent.match(/Gecko/);
+                        if(isWk){
+                            $element[0].css('cursor','-webkit-grabbing');
+                        }else if(isFF){
+                            $element[0].css('cursor','-moz-grabbing');
+                        }else{
+                            $element[0].css('cursor','move');
                         }
                     }
 
